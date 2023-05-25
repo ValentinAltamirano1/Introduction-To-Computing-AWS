@@ -1,0 +1,17 @@
+Resources:
+  MyLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: apagarRDS
+      Handler: lambda_function.lambda_handler
+      Role: arn:aws:iam::342248439323:role/LabRole
+      Code:
+        ZipFile: |
+          import boto3
+
+          def lambda_handler(event, context):
+              rds = boto3.client('rds')
+              db_instance_identifier = 'fraud-bank'
+              response = rds.stop_db_instance(DBInstanceIdentifier=db_instance_identifier)
+              print(response)
+      Runtime: python3.8
